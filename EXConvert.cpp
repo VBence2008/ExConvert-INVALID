@@ -6,6 +6,14 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
+struct EXF_BLOCK
+{
+    unsigned long long int ID;
+    std::string NAME;
+    std::string VALUE;
+    unsigned long long int FLAG[3];
+    std::string COMMENT;
+};
 int main()
 {
     while (1)
@@ -14,8 +22,28 @@ int main()
         SetConsoleTitleA("EXConvert by Veress Bence Gyula - 2022");
 #endif
         std::string input;
-        std::cout << "Enter the number of size, source unit and target unit!\nUppercase, lowercase, and spaces don't matter!\nBytes: BY, KB, MB, GB, TB, PB, EB, ZB, YB\nExords: EX, KE, ME, GE, TE, PE, EE, ZE, YE\nExample: 1.5 gb - me\nInput: ";
+        std::cout << "Enter the number of size, source unit and target unit or leave blank to exit!\nUppercase, lowercase, and spaces don't matter!\nBytes: BY, KB, MB, GB, TB, PB, EB, ZB, YB\nExords: EX, KE, ME, GE, TE, PE, EE, ZE, YE\n1 exord = " + std::to_string(sizeof(EXF_BLOCK)) + " bytes\nExample: 1.5 gb - me\nInput: ";
         std::getline(std::cin, input);
+        if (input == "")
+        {
+            exit(0);
+        }
+        std::cout << "\nBytes normally use 1000 but 1024 in binary (kibi, mebi, etc...), please choose which one do you want to use at bytes\n1 - Use normal (1000)\n2 - Use binary (1024)\n\nbytec: ";
+        int bytec;
+        std::cin >> bytec;
+        if (bytec == 1)
+        {
+            bytec = 1000;
+        }
+        else if (bytec == 2)
+        {
+            bytec = 1024;
+        }
+        else
+        {
+            std::cout << "Invalid choice!\n";
+            bytec = 1000;
+        }
         input.erase(remove(input.begin(), input.end(), ' '), input.end());
         std::transform(input.begin(), input.end(), input.begin(),
                        [](unsigned char c)
@@ -32,71 +60,71 @@ int main()
         }
         else if (unit_source == "kb")
         {
-            bytes = std::stold(source) * 1024;
+            bytes = std::stold(source) * bytec;
         }
         else if (unit_source == "mb")
         {
-            bytes = std::stold(source) * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec;
         }
         else if (unit_source == "gb")
         {
-            bytes = std::stold(source) * 1024 * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec * bytec;
         }
         else if (unit_source == "tb")
         {
-            bytes = std::stold(source) * 1024 * 1024 * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec * bytec * bytec;
         }
         else if (unit_source == "pb")
         {
-            bytes = std::stold(source) * 1024 * 1024 * 1024 * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec * bytec * bytec * bytec;
         }
         else if (unit_source == "eb")
         {
-            bytes = std::stold(source) * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec * bytec * bytec * bytec * bytec;
         }
         else if (unit_source == "zb")
         {
-            bytes = std::stold(source) * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec * bytec * bytec * bytec * bytec * bytec;
         }
         else if (unit_source == "yb")
         {
-            bytes = std::stold(source) * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
+            bytes = std::stold(source) * bytec * bytec * bytec * bytec * bytec * bytec * bytec * bytec;
         }
         else if (unit_source == "ex")
         {
-            bytes = std::stold(source) * 104;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK);
         }
         else if (unit_source == "ke")
         {
-            bytes = std::stold(source) * 104 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000;
         }
         else if (unit_source == "me")
         {
-            bytes = std::stold(source) * 104 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000;
         }
         else if (unit_source == "ge")
         {
-            bytes = std::stold(source) * 104 * 5 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000 * 1000;
         }
         else if (unit_source == "te")
         {
-            bytes = std::stold(source) * 104 * 5 * 5 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000 * 1000 * 1000;
         }
         else if (unit_source == "pe")
         {
-            bytes = std::stold(source) * 104 * 5 * 5 * 5 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000 * 1000 * 1000 * 1000;
         }
         else if (unit_source == "ee")
         {
-            bytes = std::stold(source) * 104 * 5 * 5 * 5 * 5 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000 * 1000 * 1000 * 1000 * 1000;
         }
         else if (unit_source == "ze")
         {
-            bytes = std::stold(source) * 104 * 5 * 5 * 5 * 5 * 5 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000;
         }
         else if (unit_source == "ye")
         {
-            bytes = std::stold(source) * 104 * 5 * 5 * 5 * 5 * 5 * 5 * 5 * 5;
+            bytes = std::stold(source) * sizeof(EXF_BLOCK) * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000;
         }
         else
         {
@@ -109,77 +137,78 @@ int main()
         }
         else if (unit_target == "kb")
         {
-            std::cout << bytes / 1024 << " KB\n";
+            std::cout << bytes / bytec << " KB\n";
         }
         else if (unit_target == "mb")
         {
-            std::cout << bytes / 1024 / 1024 << " MB\n";
+            std::cout << bytes / bytec / bytec << " MB\n";
         }
         else if (unit_target == "gb")
         {
-            std::cout << bytes / 1024 / 1024 / 1024 << " GB\n";
+            std::cout << bytes / bytec / bytec / bytec << " GB\n";
         }
         else if (unit_target == "tb")
         {
-            std::cout << bytes / 1024 / 1024 / 1024 / 1024 << " TB\n";
+            std::cout << bytes / bytec / bytec / bytec / bytec << " TB\n";
         }
         else if (unit_target == "pb")
         {
-            std::cout << bytes / 1024 / 1024 / 1024 / 1024 / 1024 << " PB\n";
+            std::cout << bytes / bytec / bytec / bytec / bytec / bytec << " PB\n";
         }
         else if (unit_target == "eb")
         {
-            std::cout << bytes / 1024 / 1024 / 1024 / 1024 / 1024 / 1024 << " EB\n";
+            std::cout << bytes / bytec / bytec / bytec / bytec / bytec / bytec << " EB\n";
         }
         else if (unit_target == "zb")
         {
-            std::cout << bytes / 1024 / 1024 / 1024 / 1024 / 1024 / 1024 / 1024 << " ZB\n";
+            std::cout << bytes / bytec / bytec / bytec / bytec / bytec / bytec / bytec << " ZB\n";
         }
         else if (unit_target == "yb")
         {
-            std::cout << bytes / 1024 / 1024 / 1024 / 1024 / 1024 / 1024 / 1024 / 1024 << " YB\n";
+            std::cout << bytes / bytec / bytec / bytec / bytec / bytec / bytec / bytec / bytec << " YB\n";
         }
         else if (unit_target == "ex")
         {
-            std::cout << bytes / 104 << " E\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) << " E\n";
         }
         else if (unit_target == "ke")
         {
-            std::cout << bytes / 104 / 5 << " KE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 << " KE\n";
         }
         else if (unit_target == "me")
         {
-            std::cout << bytes / 104 / 5 / 5 << " ME\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 << " ME\n";
         }
         else if (unit_target == "ge")
         {
-            std::cout << bytes / 104 / 5 / 5 / 5 << " GE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 / 1000 << " GE\n";
         }
         else if (unit_target == "te")
         {
-            std::cout << bytes / 104 / 5 / 5 / 5 / 5 << " TE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 / 1000 / 1000 << " TE\n";
         }
         else if (unit_target == "pe")
         {
-            std::cout << bytes / 104 / 5 / 5 / 5 / 5 / 5 << " PE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 / 1000 / 1000 / 1000 << " PE\n";
         }
         else if (unit_target == "ee")
         {
-            std::cout << bytes / 104 / 5 / 5 / 5 / 5 / 5 / 5 << " EE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 / 1000 / 1000 / 1000 / 1000 << " EE\n";
         }
         else if (unit_target == "ze")
         {
-            std::cout << bytes / 104 / 5 / 5 / 5 / 5 / 5 / 5 / 5 << " ZE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 / 1000 / 1000 / 1000 / 1000 / 1000 << " ZE\n";
         }
         else if (unit_target == "ye")
         {
-            std::cout << bytes / 104 / 5 / 5 / 5 / 5 / 5 / 5 / 5 / 5 << " YE\n";
+            std::cout << bytes / sizeof(EXF_BLOCK) / 1000 / 1000 / 1000 / 1000 / 1000 / 1000 / 1000 / 1000 << " YE\n";
         }
         else
         {
             std::cout << "Invalid unit!\n";
             return 0;
         }
+        std::cin.get();
         std::cin.get();
         std::cout << std::endl;
     }
