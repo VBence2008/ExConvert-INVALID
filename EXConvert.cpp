@@ -11,7 +11,7 @@ struct EXF_BLOCK
     unsigned long long int ID;
     std::string NAME;
     std::string VALUE;
-    unsigned long long int FLAG[3];
+    std::string FLAG;
     std::string COMMENT;
 };
 int main()
